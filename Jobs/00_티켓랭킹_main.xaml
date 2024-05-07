@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="_00_티켓랭킹_main" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="748,1780.8" sap2010:WorkflowViewState.IdRef="_00_티켓랭킹_main_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ss="clr-namespace:System.Security;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="_00_티켓랭킹_main" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="818.4,2120" sap2010:WorkflowViewState.IdRef="_00_티켓랭킹_main_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ss="clr-namespace:System.Security;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -91,13 +91,30 @@
       <AssemblyReference>System.Runtime.InteropServices</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="&lt;예스24 티켓랭킹&gt;&#xD;&#xA;• 템플릿 파일을 복사하여, 결과파일을 생성한다.&#xD;&#xA;- 파일명: 티켓랭킹_(오늘날짜)_(본인이름)&#xD;&#xA;- 예시: 티켓랭킹_20240408_정수진&#xD;&#xA;• http://ticket.yes24.com/New/Rank/Ranking.aspx&#xD;&#xA;• 상단에 있는 항목을 리스트로 가져온다. • 각 항목별 티켓 랭킹을 추출한다.&#xD;&#xA;• 추출한 데이터를 결과파일의 해당 시트에 기입한다. &#xD;&#xA;• 엑셀파일을 첨부하여 메일을 발송한다." DisplayName="_00_티켓랭킹_main" sap:VirtualizedContainerService.HintSize="512,1716" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="&lt;예스24 티켓랭킹&gt;&#xA;• 템플릿 파일을 복사하여, 결과파일을 생성한다.&#xA;- 파일명: 티켓랭킹_(오늘날짜)_(본인이름)&#xA;- 예시: 티켓랭킹_20240408_정수진&#xA;• http://ticket.yes24.com/New/Rank/Ranking.aspx&#xA;• 상단에 있는 항목을 리스트로 가져온다. • 각 항목별 티켓 랭킹을 추출한다.&#xA;• 추출한 데이터를 결과파일의 해당 시트에 기입한다. &#xA;• 엑셀파일을 첨부하여 메일을 발송한다.&#xA;&#xA;RE프레임 예외처리로 구동X, Main.xaml으로 디버깅!!" DisplayName="_00_티켓랭킹_main" sap:VirtualizedContainerService.HintSize="512,2055.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" Name="Config" />
       <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="dt랭킹" />
       <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="transactionData" />
-      <Variable x:TypeArguments="x:String" Name="strEmail" />
-      <Variable x:TypeArguments="ss:SecureString" Name="strPW" />
+      <Variable x:TypeArguments="x:String" Name="strEmail">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String" Value="" />
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="ss:SecureString" Name="sstrPW" />
+      <Variable x:TypeArguments="x:String" Name="str테마목록">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String" Value="" />
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="str날짜">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String" Value="" />
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="str년월" />
+      <Variable x:TypeArguments="x:String" Name="str일" />
+      <Variable x:TypeArguments="s:String[]" Name="arr테마목록" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -112,18 +129,31 @@
         <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="out_Config">[Config]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\01_티켓랭킹_원본복사.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="449.6,153.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Jobs\01_티켓랭킹_원본복사.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\01_티켓랭킹_메일수신.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="449.6,153.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="Jobs\01_티켓랭킹_메일수신.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <scg:Dictionary x:TypeArguments="x:String, Argument" />
+        <OutArgument x:TypeArguments="x:String" x:Key="out_strEmail">[strEmail]</OutArgument>
+        <OutArgument x:TypeArguments="ss:SecureString" x:Key="out_sstrPW">[sstrPW]</OutArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_dicConfig">[Config]</InArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_str테마목록">[str테마목록]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_str날짜">[str날짜]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\02_티켓랭킹_DT세팅.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="449.6,153.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Jobs\02_티켓랭킹_초기세팅.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\01_티켓랭킹_원본복사.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="449.6,153.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Jobs\02_티켓랭킹_원본복사.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_config">[Config]</InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_dicConfig">[Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_str날짜">[str날짜]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\02_티켓랭킹_초기세팅.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="449.6,153.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="Jobs\03_티켓랭킹_초기세팅.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_dicConfig">[Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_str테마목록">[str테마목록]</InArgument>
         <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt랭킹">[dt랭킹]</OutArgument>
         <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_transactionData">[transactionData]</OutArgument>
-        <OutArgument x:TypeArguments="x:String" x:Key="out_strEmail">[strEmail]</OutArgument>
-        <OutArgument x:TypeArguments="ss:SecureString" x:Key="out_strPW">[strPW]</OutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_str날짜">[str날짜]</InArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_str년월">[str년월]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_str일">[str일]</OutArgument>
+        <OutArgument x:TypeArguments="s:String[]" x:Key="out_arr테마목록">[arr테마목록]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
     <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[transactionData]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="449.6,736" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
@@ -138,40 +168,49 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\02_티켓랭킹_항목별추출.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="353.6,153.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Jobs\03_티켓랭킹_항목별추출.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\02_티켓랭킹_항목별추출.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="353.6,153.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Jobs\04_티켓랭킹_항목별추출.xaml">
               <ui:InvokeWorkflowFile.Arguments>
                 <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_config">[Config]</InArgument>
                 <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dt랭킹">[dt랭킹]</InOutArgument>
                 <InArgument x:TypeArguments="sd:DataRow" x:Key="in_transactionItem">[transactionItem]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_str일">[str일]</InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\04_티켓랭킹_DT편집.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="353.6,153.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Jobs\04_티켓랭킹_DT편집.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\04_티켓랭킹_DT편집.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="353.6,153.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Jobs\05_티켓랭킹_DT편집.xaml">
               <ui:InvokeWorkflowFile.Arguments>
                 <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dt랭킹">[dt랭킹]</InOutArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\05_티켓랭킹_시트기입.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="353.6,136.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Jobs\05_티켓랭킹_시트기입.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\05_티켓랭킹_시트기입.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="353.6,136.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Jobs\06_티켓랭킹_시트기입.xaml">
               <ui:InvokeWorkflowFile.Arguments>
                 <InArgument x:TypeArguments="sd:DataRow" x:Key="in_transactionItem">[transactionItem]</InArgument>
                 <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dt랭킹">[dt랭킹]</InArgument>
+                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_dicConfig">[Config]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_str날짜">[str날짜]</InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
           </Sequence>
         </ActivityAction>
       </ui:ForEachRow.Body>
     </ui:ForEachRow>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\06_티켓랭킹_이메일전송.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="449.6,153.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Jobs\06_티켓랭킹_이메일전송.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\06_티켓랭킹_엑셀정리.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="449.6,153.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_12" UnSafe="False" WorkflowFileName="Jobs\07_티켓랭킹_엑셀정리.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_dicConfig">[Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_str날짜">[str날짜]</InArgument>
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_transactionData">[transactionData]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Jobs\06_티켓랭킹_이메일전송.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="449.6,153.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Jobs\08_티켓랭킹_이메일전송.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_strEmail">[strEmail]</InArgument>
-        <InArgument x:TypeArguments="ss:SecureString" x:Key="in_strPW">[strPW]</InArgument>
-        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_config">[Config]</InArgument>
+        <InArgument x:TypeArguments="ss:SecureString" x:Key="in_strPW">[sstrPW]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_str날짜">[str날짜]</InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_dicConfig">[Config]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Framework\KillAllProcesses.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="449.6,136.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="Framework\KillAllProcesses.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
-          <VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="Config" />
-        </InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[Config]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
   </Sequence>

@@ -2,12 +2,13 @@
   <x:Members>
     <x:Property Name="in_strEmail" Type="InArgument(x:String)" />
     <x:Property Name="in_strPW" Type="InArgument(ss:SecureString)" />
-    <x:Property Name="in_config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_str날짜" Type="InArgument(x:String)" />
+    <x:Property Name="in_dicConfig" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>503.20000000000005,907.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>817.6,951.2</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_06_티켓랭킹_이메일전송_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -102,7 +103,7 @@
       <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="• 현재 날짜와 이름으로 이메일을 전송한다." DisplayName="_06_티켓랭킹_이메일전송" sap:VirtualizedContainerService.HintSize="513.6,842.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="• 현재 날짜와 이름으로 이메일을 전송한다." DisplayName="_06_티켓랭킹_이메일전송" sap:VirtualizedContainerService.HintSize="513.6,886.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -110,20 +111,25 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="451.2,182.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;티켓랭킹 이메일전송 시작...&quot;]" />
-    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="451.2,374.4" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="451.2,418.4" sap2010:WorkflowViewState.IdRef="CommentOut_1">
       <ui:CommentOut.Body>
-        <Sequence DisplayName="무시된 액티비티" sap:VirtualizedContainerService.HintSize="416,256" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="무시된 액티비티" sap:VirtualizedContainerService.HintSize="416,300" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" ContinueOnError="{x:Null}" MailMessage="{x:Null}" Password="{x:Null}" ReplyTo="{x:Null}" Result="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" Body="티켓랭킹 과제 입니다." DisplayName="이메일전송 | Send SMTP Mail Message" Email="[in_strEmail]" EnableSSL="True" From="[in_strEmail]" sap:VirtualizedContainerService.HintSize="353.6,169.6" sap2010:WorkflowViewState.IdRef="SendMail_1" IgnoreCRL="False" IsBodyHtml="True" Name="원성현" Port="587" SecureConnection="Auto" SecurePassword="[in_strPW]" Server="smtp.gmail.com" Subject="[&quot;[티켓랭킹] &quot;+Now.ToString(&quot;yyyy/MM/dd&quot;)+&quot; 예스24 티켓랭킹 과제 제출_원성현&quot;]" To="[in_config(&quot;Mail_Receiver&quot;).ToString]">
+          <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" ContinueOnError="{x:Null}" MailMessage="{x:Null}" Password="{x:Null}" ReplyTo="{x:Null}" Result="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" sap2010:Annotation.AnnotationText="구동완료 확인.&#xD;&#xA;테스트로 비활성처리함." Body="[in_dicConfig(&quot;Mail_Contents&quot;).ToString]" DisplayName="이메일전송 | Send SMTP Mail Message" Email="[in_strEmail]" EnableSSL="True" From="[in_strEmail]" sap:VirtualizedContainerService.HintSize="353.6,213.6" sap2010:WorkflowViewState.IdRef="SendMail_2" IgnoreCRL="False" IsBodyHtml="True" Name="원성현" Port="587" SecureConnection="Auto" SecurePassword="[in_strPW]" Server="smtp.gmail.com" Subject="[&quot;[티켓랭킹] &quot;+Now.ToString(&quot;yyyy/MM/dd&quot;)+in_dicConfig(&quot;Mail_Title&quot;).ToString+in_dicConfig(&quot;Mail_Writer&quot;).ToString]" To="[in_dicConfig(&quot;Mail_Receiver&quot;).ToString]">
             <ui:SendMail.Files>
               <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
-                <InArgument x:TypeArguments="x:String">C:\Users\dnjst\Documents\UiPath\RPA01_티켓랭킹_원성현\Data\Output\티켓랭킹_20240408_원성현.xlsx</InArgument>
+                <InArgument x:TypeArguments="x:String">[String.Format(in_dicConfig("Data_Output").ToString, in_str날짜.Replace("/","").Replace("*","").Trim, in_dicConfig("Mail_Writer").ToString)]</InArgument>
               </scg:List>
             </ui:SendMail.Files>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
           </ui:SendMail>
         </Sequence>
       </ui:CommentOut.Body>
